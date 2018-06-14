@@ -1,0 +1,80 @@
+>> kalmandev_v4
+file_in =
+    'fusdat_pickup_play1_thenreturn.mat'
+lookingAt =
+    'accel_x'
+ans =
+       15.593      0.24018
+      0.24018     0.013674
+>> kalmandev_v4
+file_in =
+    'fusdat_pickup_play2_thenreturn.mat'
+lookingAt =
+    'accel_x'
+ans =
+       15.593      0.24018
+      0.24018     0.013674
+>> kalmandev_v4
+file_in =
+    'fusdat_pickup_play1_thenreturn.mat'
+lookingAt =
+    'accel_y'
+ans =
+       11.304      0.19044
+      0.19044     0.012137
+>> kalmandev_v4
+file_in =
+    'fusdat_pickup_play2_thenreturn.mat'
+lookingAt =
+    'accel_y'
+ans =
+       11.304      0.19044
+      0.19044     0.012137
+>> kalmandev_v4
+file_in =
+    'fusdat_pickup_play1_thenreturn.mat'
+lookingAt =
+    'accel_z'
+ans =
+       22.692      0.31481
+      0.31481     0.015708
+>> kalmandev_v4
+file_in =
+    'fusdat_pickup_play2_thenreturn.mat'
+lookingAt =
+    'accel_z'
+ans =
+       22.692      0.31481
+      0.31481     0.015708
+>> kalmandev_v4
+file_in =
+    'fusdat_pickup_play1_thenreturn.mat'
+lookingAt =
+    'gyro_y'
+ans =
+       0.5818     0.022344
+     0.022344    0.0039857
+>> kalmandev_v4
+file_in =
+    'fusdat_pickup_play2_thenreturn.mat'
+lookingAt =
+    'gyro_y'
+ans =
+       0.5818     0.022344
+     0.022344    0.0039857
+>> kalmandev_v4
+file_in =
+    'fusdat_pickup_play1_thenreturn.mat'
+lookingAt =
+    'gyro_z'
+ans =
+      0.36394     0.015996
+     0.015996    0.0033498
+>> kalmandev_v4
+file_in =
+    'fusdat_pickup_play2_thenreturn.mat'
+lookingAt =
+    'gyro_z'
+ans =
+      0.36394     0.015996
+     0.015996    0.0033498

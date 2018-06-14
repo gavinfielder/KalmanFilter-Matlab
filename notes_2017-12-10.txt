@@ -1,0 +1,33 @@
+Notes on uploads on 12/10/2017
+
+   @author Gavin Fielder
+   @date 12/10/2017
+
+While porting the kalman filter to C, I noticed in my previous kalman filter I 
+accidentally was using the forward derivative instead of the backward derivative. 
+After fixing this, the kalman filter no longer works as effectively.
+
+I've uploaded the new version, which uses the rear derivative.
+
+I've also uploaded the kalman filter in C code. It is currently an identical 
+algorithm to kalmandev_v3 matlab script. It appears to only reduce about 10-20%
+of noise. 
+
+Future work:
+    1. Get it working effectively again. 
+       
+       This might be as simple as finding the proper process noise covariance 
+       marix (Q) setting.
+
+       But the previous method I found accidentally for setting Q is no longer
+       as effective, either. 
+
+       Another possibility is to take the kalman filter down to a 2-dimensional 
+       state estimation and then run a 3-dimensional optimization problem to
+       optimize Q. 
+
+       As a final note, my matlab script still uses the forward derivative to
+       come up with the baseline measurement noise covariance matrix R, and the
+       R I measured with the forward derivative is also ported to the C code.
+       I don't think using the forward derivative with the baseline would pose
+       any issue, since it's a steady state, but it's something to note.

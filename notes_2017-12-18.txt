@@ -1,0 +1,12 @@
+Notes on uploads on 12/18/2017
+
+   @author Gavin Fielder
+   @date 12/18/2017
+
+
+I have rewritten both the matlab script and the C program of the kalman filter to be 2-dimensional and provided an intial estimate of the process noise covariance matrices Q for each axis of the accelerometer and gyroscope data that was collected on Nov 17th. 
+
+The matlab script is now kalmandev_v4.m
+The C program is in kalmanfilter_c_1218.zip
+
+I've also re-uploaded the data I collected on Nov 17th. This is data_2017-11-17.zip

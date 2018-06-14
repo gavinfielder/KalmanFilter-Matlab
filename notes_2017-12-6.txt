@@ -1,0 +1,90 @@
+Notes on uploads on 12/6/2017
+
+  @author Gavin Fielder 
+  @date 12/7/2017
+
+In the zip file Filtering_and_Fusion_2017-12-06.zip I've included:
+    1. The data I collected on 11/17/2017
+    2. A simple data processing script, with a function for finding 
+       a coefficient of linear proportionality between data series.
+    3. My Kalman Filter so far, and an approximation for the process noise
+       covariance matrix Q.
+
+I believe the data to be unreliable. Many of these data sets were obtained with
+a simple test: Place the unit on one end of a board, and lift the board such 
+that its other end remains a fixed pivot point. Through this test, I expected a
+linear correlation between at least one accelerometer and one gyro series. 
+If you run the data processing script
+for fusdat_pcbdown_lcdforward_lift1_thenreturn.mat, and 
+fusdat_pcbleft_lcdback_lift2_thenreturn.mat, (these files were obtained with
+the aforementioned test), you see that rather than being a linear correlation,
+one is the derivative of the other. Worse, which is the derivative of which
+seems to switch--in one file, gyro is the derivative of accel, and in the other,
+accel is the derivative of gyro. This indicates some sort of unpredictable
+behavior is occurring. 
+
+My current theory for this is that the data transmission process is not syncing
+properly--if the order of reception is off by an even number of bytes, data
+series will not be put into the correct arrays. If the order of reception is off
+by an odd number of bytes, then the data would be scrambled between the high 
+and low bytes of the data. This might be a viable explanation as to why the
+vast majority of the data I collected (the other files) does not even look 
+reliable.
+
+Based on this, I wrote an alternate data transfer script for the STM and MATLAB.
+It's located in "~/Data Transfer Program 12/5/2017/"
+
+Future steps:
+    1. Once reliable data is obtained, I can work on sensor fusion. My current
+       ideas on this are:
+          a. Kalman-filtering the accel and gyro series and averaging
+             the linearly correlated result with a weighted average which can
+             be tuned for good results.
+          b. Averaging the linearly correlated data with a weighted average and
+             then kalman-filtering the result. I think this method is the most
+             promising one without time lag. It's the first thing I'd try.
+          c. Building a kalman filter that fuses the sensor data within its
+             iterative cycle. This would require more time and study, but could
+             be well worth it.
+          d. Future work can include filtering for spikes. One way to do this
+             would be to modify the kalman gain when a spike is detected. This
+             would require a better understanding of the kalman filter
+             algorithm.
+          e. Alternatively, one way to reduce noise could also to be use rolling
+             averages, i.e., each output signal is the average of the previous 2
+             or even 3 sensor readings. Of course, this would definitely create
+             a time lag. If a time lag is acceptable, it might be worth trying
+             doing this before inputting the resulting signal into the kalman
+             filter. A combination of rolling average, linear correlation, and
+             kalman filtering should practically eliminate noise, if that was 
+             the only goal. 
+    2. Finding a better process noise covariance matrix Q. Currently, my 
+       kalman filter uses the first and second derivatives of the data, making
+       a 3-dimensional system, which gives the covariance matrices 6 independent
+       values. While a 6-dimensional optimization problem would be difficult, it
+       might have some success in a decent algorithm if the current Q was used
+       as an initial estimate.
+       Alternatively, I can use my current method for finding Q to strike a 
+       balance between noise reduction and time lag. Details in the kalman
+       filtering script.
+    3. Sometime I do need to take a closer look at how I compute derivatives
+       as well as the indexing in general to verify that each index in the 
+       arrays mean what they should. For now, however, the filter is working at
+       least by visual inspection.
+
+Other ideas:
+    1. Maybe it'd be better to go from using the 2nd derivative to reducing the
+       filter to use the first derivative only. The second derivative of noisy
+       data is of limited use anyway, even with measured variance, and reducing
+       to 2x2 matrices would make optimizing Q a much simpler process, not to
+       mention reducing storage space and computation time.
+
+Unresolved issues:
+    1. The measurement noise is not constant. The sensors occasionally have
+       periods of high levels of noise. Sensor fusion may help with this, but
+       in general I have no idea how to deal with this. Changing R dynamically
+       in the kalman filter would require a much better understanding of 
+       statistics.
+
+
+
